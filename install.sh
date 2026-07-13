@@ -1,29 +1,31 @@
 #!/bin/bash
 set -e
 
-echo "Starting setup for Multi-LLM Agent..."
+echo "--- Настройка Multi-LLM Agent ---"
 
-# 1. Setup Pi extensions
-mkdir -p .pi/extensions
-
-# Assuming you have the source file for the extension
+# 1. Проверка наличия расширения в репозитории
 EXTENSION_SRC=".pi/extensions/call_junior_llm_extension.ts"
-EXTENSION_DEST=".pi/extensions/call_junior_llm_extension.ts"
 
-if [ -f "$EXTENSION_SRC" ]; then
-   echo "Extension already in place."
-else
-   echo "Error: Extension file not found at $EXTENSION_SRC. Please ensure it exists."
+if [ ! -f "$EXTENSION_SRC" ]; then
+   echo "Ошибка: Файл расширения не найден по пути $EXTENSION_SRC."
+   echo "Убедитесь, что вы находитесь в корне репозитория."
    exit 1
 fi
 
-# 2. Python dependencies
-echo "Installing Python dependencies..."
+echo "Расширение найдено."
+
+# 2. Установка Python зависимостей
+echo "Установка Python зависимостей..."
 if [ -f "requirements.txt" ]; then
     pip install -r requirements.txt
+    echo "Зависимости установлены."
 else
-    echo "Warning: requirements.txt not found, skipping Python dependencies."
+    echo "Ошибка: requirements.txt не найден."
+    exit 1
 fi
 
-echo "Setup complete!"
-echo "Now restart Pi or run '/reload' in the Pi terminal to load the new extension."
+echo "--- Настройка завершена! ---"
+echo "Теперь:"
+echo "1. Убедитесь, что Ollama запущен."
+echo "2. Выполните 'ollama pull qwen:0.5b'."
+echo "3. В терминале Pi выполните '/reload' для загрузки расширения."

@@ -12,7 +12,8 @@ env/
 /models/
 
 # Pi Agent specific files
-.pi/
+.pi/*
+!.pi/extensions/
 
 # IDE / Editor specific files
 .vscode/
